@@ -3,7 +3,9 @@ const checkButton = document.getElementById('save')
 const canvas = document.querySelector('#canvas')
 const smallCanvas = document.querySelector('#smallCanvas')
 const ctx = canvas.getContext('2d')
+const clearButton = document.getElementById('clear')
 const smallCtx = smallCanvas.getContext('2d')
+const result = document.getElementById('number')
 
 const divide = num => parseFloat(num / 255)
 
@@ -28,11 +30,17 @@ function checkImage() {
 	var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados))
 
 	console.log('Prediccion', mayorIndice)
+	result.innerHTML = mayorIndice
 }
 
 async function loadModel() {
-	model = await tf.loadLayersModel('/models/tfjs/number_classifier/model.json')
+	model = await tf.loadLayersModel('/model/model.json')
 	console.log('model loaded')
+}
+
+function clear() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	result.innerHTML = ''
 }
 
 // Source: https://www.geeksforgeeks.org/how-to-draw-with-mouse-in-html-5-canvas/
@@ -42,6 +50,7 @@ window.addEventListener('load', () => {
 	document.addEventListener('mouseup', stopPainting)
 	document.addEventListener('mousemove', sketch)
 	checkButton.addEventListener('click', checkImage)
+	clearButton.addEventListener('click', clear)
 })
 
 let coord = { x: 0, y: 0 }
@@ -74,7 +83,7 @@ function sketch(event) {
 
 /**
  * Hermite resize - fast image resize/resample using Hermite filter. 1 cpu version!
- *
+ * Source: RingaTech github
  * @param {HtmlElement} canvas
  * @param {int} width
  * @param {int} height
