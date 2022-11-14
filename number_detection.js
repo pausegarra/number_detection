@@ -7,6 +7,11 @@ const clearButton = document.getElementById('clear')
 const smallCtx = smallCanvas.getContext('2d')
 const result = document.getElementById('number')
 
+loadModel()
+
+checkButton.addEventListener('click', checkImage)
+clearButton.addEventListener('click', clear)
+
 const divide = num => parseFloat(num / 255)
 
 function checkImage() {
@@ -40,64 +45,8 @@ async function loadModel() {
 
 function clear() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	drawingcanvas.clear()
 	result.innerHTML = ''
-}
-
-// Source: https://www.geeksforgeeks.org/how-to-draw-with-mouse-in-html-5-canvas/
-window.addEventListener('load', () => {
-	loadModel()
-	document.addEventListener('mousedown', startPainting)
-	document.addEventListener('mouseup', stopPainting)
-	document.addEventListener('mousemove', sketch)
-	checkButton.addEventListener('click', checkImage)
-	clearButton.addEventListener('click', clear)
-
-	canvas.addEventListener(
-		'touchmove',
-		function (e) {
-			var touch = e.touches[0]
-			var mouseEvent = new MouseEvent('mousemove', {
-				clientX: touch.clientX,
-				clientY: touch.clientY,
-			})
-			canvas.dispatchEvent(mouseEvent)
-		},
-		false
-	)
-})
-
-let coord = { x: 0, y: 0 }
-let paint = false
-
-function getPosition(event) {
-	event.preventDefault()
-	event.stopPropagation()
-	coord.x = event.clientX - canvas.offsetLeft
-	coord.y = event.clientY - canvas.offsetTop
-}
-
-function startPainting(event) {
-	event.preventDefault()
-	event.stopPropagation()
-	paint = true
-	getPosition(event)
-}
-function stopPainting() {
-	paint = false
-}
-
-function sketch(event) {
-	event.preventDefault()
-	event.stopPropagation()
-	if (!paint) return
-	ctx.beginPath()
-	ctx.lineWidth = 10
-	ctx.lineCap = 'round'
-	ctx.strokeStyle = '#000'
-	ctx.moveTo(coord.x, coord.y)
-	getPosition(event)
-	ctx.lineTo(coord.x, coord.y)
-	ctx.stroke()
 }
 
 /**

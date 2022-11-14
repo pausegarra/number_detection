@@ -15,8 +15,10 @@
       <p class="text-[#00004c]">Draw a number, clean and centered to more precision.</p>
       <p class="text-gray-500 text-xs">This project uses a self-trained tensorflow model to predict the number</p>
     </div>
-    <canvas id="canvas" width="200" height="200" class="border rounded-md"></canvas>
-    <canvas id="smallCanvas" width="28" height="28" class="hidden"></canvas>
+    <div>
+      <canvas id="canvas" width="200" height="200" class="border rounded-md mb-9"></canvas>
+      <canvas id="smallCanvas" width="28" height="28" class="hidden"></canvas>
+    </div>
     <span id="number" class="font-bold text-5xl"></span>
     <div class="">
       <button id="save" class="bg-[#00004c] px-4 py-1 text-white rounded-md">Check</button>
@@ -29,6 +31,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  <script src="/fabric.min.js" ></script>
+  <script src="/drawing.js"></script>
   <script src="./number_detection.js"></script>
 </body>
 </html>
