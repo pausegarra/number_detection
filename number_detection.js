@@ -51,17 +51,34 @@ window.addEventListener('load', () => {
 	document.addEventListener('mousemove', sketch)
 	checkButton.addEventListener('click', checkImage)
 	clearButton.addEventListener('click', clear)
+
+	canvas.addEventListener(
+		'touchmove',
+		function (e) {
+			var touch = e.touches[0]
+			var mouseEvent = new MouseEvent('mousemove', {
+				clientX: touch.clientX,
+				clientY: touch.clientY,
+			})
+			canvas.dispatchEvent(mouseEvent)
+		},
+		false
+	)
 })
 
 let coord = { x: 0, y: 0 }
 let paint = false
 
 function getPosition(event) {
+	event.preventDefault()
+	event.stopPropagation()
 	coord.x = event.clientX - canvas.offsetLeft
 	coord.y = event.clientY - canvas.offsetTop
 }
 
 function startPainting(event) {
+	event.preventDefault()
+	event.stopPropagation()
 	paint = true
 	getPosition(event)
 }
@@ -70,6 +87,8 @@ function stopPainting() {
 }
 
 function sketch(event) {
+	event.preventDefault()
+	event.stopPropagation()
 	if (!paint) return
 	ctx.beginPath()
 	ctx.lineWidth = 10
